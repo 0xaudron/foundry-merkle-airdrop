@@ -4,4 +4,4 @@ A simple and efficient Merkle Airdrop contract built using **Solidity**. This co
 
 ## Overview
 
-Merkle Airdrop is designed to streamline the process of airdropping tokens to a large number of recipients. Instead of sending tokens to each address individually, which can be costly and inefficient, the Merkle Airdrop contract uses a **Merkle tree** to verify the eligibility of participants in a gas-efficient way.
+Merkle Airdrop is designed to streamline the process of airdropping tokens to recipients. Instead of sending tokens to each address individually, which can be costly and inefficient, the Merkle Airdrop contract uses a **Merkle tree** to verify the eligibility of participants in a gas-efficient way.
