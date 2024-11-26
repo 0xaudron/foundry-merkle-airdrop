@@ -1,8 +1,65 @@
 ## Merkle Airdrop
+A Merkle Airdrop is a cryptographic method for efficiently distributing tokens to a large group of people while minimizing the amount of data stored on the blockchain.
 
-# MerkleAirdrop.sol and BagelToken.sol
+Basically this is the file strucutre of the contracts : 
 
-This repository contains two Solidity smart contracts: `MerkleAirdrop.sol` and `BagelToken.sol`.
+```plaintext
+src/
+├── MerkleAirdrop.sol      
+└── BagelToken.sol
+
+script/
+├── DeployMerkleAirdrop.s.sol      
+├── GenerateInput.s.sol
+├── target/
+├── MakeMerkle.s.sol
+└── Interact.s.sol
+
+test/
+├── Crypto.t.sol      
+└── MerkleAirdrop.s.sol
+```
+### Structure
+
+```plaintext
+1. List of Eligible Users and Token Amounts
++---------------------------------------------------------------+
+|   Address 1    ->  Amount 1                                    |
+|   Address 2    ->  Amount 2                                    |
+|   Address 3    ->  Amount 3                                    |
+|   Address 4    ->  Amount 4                                    |
+|   ...                                                    |
++---------------------------------------------------------------+
+
+2. Hashing Each Address and Amount into Leaf Nodes
++-------------------------+      +-------------------------+ 
+| Hash(Address 1, Amount 1) |      | Hash(Address 2, Amount 2) | 
++-------------------------+      +-------------------------+ 
+            |                              |
+            v                              v
++-------------------------+      +-------------------------+ 
+| Hash(Address 3, Amount 3) |      | Hash(Address 4, Amount 4) | 
++-------------------------+      +-------------------------+
+
+3. Building the Merkle Tree (Parent Nodes)
++---------------------------------------+       +---------------------------------------+
+| Hash( Hash(Address 1, Amount 1),     |       | Hash( Hash(Address 3, Amount 3),     |
+|      Hash(Address 2, Amount 2) )     |       |      Hash(Address 4, Amount 4) )     |
++---------------------------------------+       +---------------------------------------+
+
+4. Final Merkle Root (Stored on-chain)
++---------------------------------------------------------------+
+| Merkle Root (Single Hash)                                      |
+| (Represents the entire structure)                              |
++---------------------------------------------------------------+
+
+5. User Claim Process
+- User submits their Merkle Proof, consisting of hashes required
+  to verify their inclusion in the Merkle tree.
+  
+- The Merkle Proof is validated against the stored Merkle Root.
+- If valid, the user is eligible to claim their tokens.
+```
 
 ## MerkleAirdrop.sol
 
